@@ -5,7 +5,7 @@ namespace Platform.Source
 {
     //
     [DisplayName("抽象数据源")]
-    public abstract class AbstractSource
+    public abstract class Source
     {
         //
         [DisplayName("初始化")]

@@ -7,7 +7,7 @@ namespace Platform.Source
 {
     //
     [DisplayName("MySQL数据库")]
-    public class MySQLSource : DatabaseSource
+    public class MySQLSource : DbSource
     {
         //
         [DisplayName("初始化")]

@@ -6,7 +6,7 @@ namespace Platform.Source
 {
     //
     [DisplayName("抽象数据库")]
-    public abstract class DatabaseSource : AbstractSource
+    public abstract class DbSource : AbstractSource
     {
         //
         [DisplayName("加载表")]
