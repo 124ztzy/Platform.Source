@@ -21,11 +21,11 @@ namespace Platform.Source
                 DbCommand command = _factory.CreateCommand();
                 command.Connection = connection;
                 command.CommandText = sql;
-                DataTable table = new DataTable();
-                table.ExtendedProperties.Add("sql", sql);
                 DbDataAdapter adapter = _factory.CreateDataAdapter();
                 adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
                 adapter.SelectCommand = command;
+                DataTable table = new DataTable();
+                table.ExtendedProperties.Add("sql", sql);
                 int count = adapter.Fill(table);
                 connection.Close();
                 return table;
@@ -35,9 +35,6 @@ namespace Platform.Source
         [DisplayName("保存表")]
         public override int Save(DataTable table)
         {
-            string sql = table.ExtendedProperties.Contains("sql") ? 
-                table.ExtendedProperties["sql"].ToString() :
-                "select * from " + table.TableName + " where 1=2 ";
             if(_factory == null || _connectionString == null)
                 Init();
             using(DbConnection connection = _factory.CreateConnection())
@@ -46,7 +43,9 @@ namespace Platform.Source
                 connection.Open();
                 DbCommand command = _factory.CreateCommand();
                 command.Connection = connection;
-                command.CommandText = sql;
+                command.CommandText = table.ExtendedProperties.Contains("sql") ? 
+                    table.ExtendedProperties["sql"].ToString() :
+                    "select * from " + table.TableName + " where 1=2 ";
                 DbDataAdapter adapter = _factory.CreateDataAdapter();
                 adapter.SelectCommand = command;
                 DbCommandBuilder builder = _factory.CreateCommandBuilder();
