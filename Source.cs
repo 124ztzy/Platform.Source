@@ -12,10 +12,10 @@ namespace Platform.Source
         protected abstract void Init();
         //
         [DisplayName("加载表")]
-        public abstract int Load(DataTable table, string tableExtract, params string[] columnExtracts);
+        public abstract DataTable Load(string tableExtract, params string[] columnExtracts);
         //
         [DisplayName("保存表")]
-        public abstract int Save(DataTable table, string tableParam);
+        public abstract int Save(DataTable table);
 
 
         //
