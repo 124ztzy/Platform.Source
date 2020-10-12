@@ -34,6 +34,7 @@ namespace Platform.Source
                 else
                     table.Columns.Add(group);
             }
+            //提取数据
             MatchCollection matches = regex.Matches(_text);
             foreach(Match match in matches)
             {

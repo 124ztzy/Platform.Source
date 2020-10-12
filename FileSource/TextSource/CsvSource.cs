@@ -19,6 +19,7 @@ namespace Platform.Source
             string[] rows = Regex.Split(_text, RowSeparator);
             foreach(string row in rows)
             {
+                //首行做列名
                 if(_table.Columns.Count == 0) 
                 {
                     string[] cells = Regex.Split(row.TrimEnd(), ColumnSeparator);
