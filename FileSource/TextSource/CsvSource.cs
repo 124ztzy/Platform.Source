@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Text;
+using System.IO;
 
 namespace Platform.Source
 {
@@ -44,13 +46,34 @@ namespace Platform.Source
         {
             if(_table == null)
                 Init();
-            return columnNames == null ? _table.Copy() : _table.DefaultView.ToTable(false, columnNames);
+            return columnNames == null ? 
+                _table.Copy() :
+                _table.DefaultView.ToTable(false, columnNames);
         }
         //
         [DisplayName("储存表")]
         public override int Save(DataTable table)
         {
-            return 0;
+            StringBuilder builder = new StringBuilder();
+            foreach(DataColumn column in table.Columns)
+            {
+                if(column.Ordinal != 0)
+                    builder.Append(ColumnSeparator);
+                builder.Append(column.ColumnName);
+            }
+            builder.Append(RowSeparator);
+            foreach(DataRow row in table.Rows)
+            {
+                foreach(DataColumn column in table.Columns)
+                {
+                    if(column.Ordinal != 0)
+                        builder.Append(ColumnSeparator);
+                    builder.Append(row[column]);
+                }
+                builder.Append(RowSeparator);
+            }
+            File.WriteAllText(FilePath, builder.ToString(), string.IsNullOrEmpty(Enctype) ? Encoding.UTF8 : Encoding.GetEncoding(Enctype));
+            return table.Rows.Count;
         }
 
 
